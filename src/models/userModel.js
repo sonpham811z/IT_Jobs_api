@@ -6,9 +6,11 @@ import { OBJECT_ID_RULE, OBJECT_ID_RULE_MESSAGE } from '~/utils/validator'
 
 const USER_COLLECTION_NAME = 'users'
 const USER_COLLECTION_SCHEMA = Joi.object({
-    auth0Id: Joi.string().required(), // ID từ Auth0
+    sub: Joi.string().required(), // ID từ Auth0
     email: Joi.string().required().email(),
+    email_verified: Joi.boolean().default(false),
     name: Joi.string().required().min(2).max(50).trim().strict(),
+    nickname: Joi.string().required().min(2).max(50),
     picture: Joi.string().uri().optional(),
     role: Joi.string().valid('user', 'admin').default('user'), // Phân quyền
     createdAt: Joi.date().default(() => new Date()),

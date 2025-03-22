@@ -7,9 +7,11 @@ export const createNew = async (userData) => {
         if (!user) {
             // Nếu chưa có, tạo user mới
             const newUser = {
-                auth0Id: userData.sub,
+                sub: userData.sub,
                 email: userData.email,
+                email_verified: userData.email_verified,
                 name: userData.name,
+                nickname: userData.nickname,
                 picture: userData.picture
             }
             const result = await userModel.createNew(newUser)
