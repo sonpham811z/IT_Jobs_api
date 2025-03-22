@@ -3,7 +3,7 @@ import { userModel } from '~/models/userModel'
 export const createNew = async (userData) => {
     try {
         let user = await userModel.findOneByEmail(userData.email)
-
+        console.log(userData)
         if (!user) {
             // Nếu chưa có, tạo user mới
             const newUser = {
