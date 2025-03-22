@@ -7,7 +7,7 @@ export const createNew = async (userData) => {
         if (!user) {
             // Nếu chưa có, tạo user mới
             const newUser = {
-                sub: userData.sub,
+                user_id: userData.user_id,
                 email: userData.email,
                 email_verified: userData.email_verified,
                 name: userData.name,
