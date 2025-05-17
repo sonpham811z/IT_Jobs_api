@@ -1,26 +1,28 @@
 import { userModel } from '~/models/userModel'
 
-export const createNew = async (userData) => {
-    try {
-        let user = await userModel.findOneByEmail(userData.email)
-        console.log(userData)
-        if (!user) {
-            // Nếu chưa có, tạo user mới
-            const newUser = {
-                user_id: userData.user_id,
-                email: userData.email,
-                email_verified: userData.email_verified,
-                name: userData.name,
-                nickname: userData.nickname,
-                picture: userData.picture
-            }
-            const result = await userModel.createNew(newUser)
-            user = { ...newUser, _id: result.insertedId }
-        }
+const pickUserData = (user) => {
+    if (!user) return null
+    
+    // Remove sensitive fields
+    const { password, ...userData } = user
+    return userData
+}
 
-        return user
+const createNew = async(userData) => {
+    try {
+        // Check if user already exists
+        const existingUser = await userModel.findOneByEmail(userData.email)
+        if (existingUser) {
+            return pickUserData(existingUser)
+        }
+        
+        // Create new user
+        const newUser = await userModel.createNew(userData)
+        const createdUser = await userModel.findOneById(newUser.insertedId)
+        
+        return pickUserData(createdUser)
     } catch (error) {
-        throw new Error(error)
+        throw error
     }
 }
 
