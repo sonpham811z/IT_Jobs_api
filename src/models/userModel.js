@@ -73,6 +73,9 @@ const USER_COLLECTION_SCHEMA = Joi.object({
     experience: Joi.array().items(EXPERIENCE_SCHEMA).default([]),
     certificates: Joi.array().items(CERTIFICATE_SCHEMA).default([]),
     skills: Joi.array().items(Joi.string()).default([]),
+    saveJob: Joi.array().items(Joi.string()).default([]),
+    saveCompany: Joi.array().items(Joi.string()).default([]),
+    cvLink: Joi.string().default(null),
 
     createdAt: Joi.date().default(() => new Date()),
     updatedAt: Joi.date().default(null)
